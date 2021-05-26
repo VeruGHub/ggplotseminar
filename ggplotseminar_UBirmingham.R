@@ -137,7 +137,7 @@ myplot2 + #Customize aesthetics
 #blue to yellow?
 
 myplot +
-  scale_color_gradient(low = "blue", high = "yellow")
+  
 
 #theme() #Complete customization of all plot elements
 ?theme
