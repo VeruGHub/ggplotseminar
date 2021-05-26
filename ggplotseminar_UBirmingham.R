@@ -90,53 +90,60 @@ ggplot(data = forests) +
   geom_smooth(aes(x = Shannon, y = mgrowth, color = Type, fill = Type))
 
 
+
 #The extras (part I) #########
 #Advanced level!!! 
+#see the cheat sheet
 
-myplot2 <- ggplot(data = forests) + 
+myplot <- ggplot(data = forests) + 
   geom_point(aes(x = Shannon, y = mgrowth, color = Richness))
 
-myplot2 + 
+myplot + 
   labs(title = "Diversity vs. mean beech growth", #1 Labels
        x = "Shannon index", y = "Mean growth (mm per year)") 
+#title, subtitle, x, y, caption
 
-myplot2 +  #2 Coordinate system
+myplot +  #2 Coordinate system
     coord_cartesian(ylim = c(0.5,5)) 
-myplot2 +  
+myplot +  
   coord_polar() 
+
+#Exercise: change the position of x and y axis in the coordinate system
+
 
 
 # Faceting 
 # Facets divide a plot into subplots based on the values of one or more
 # discrete variables.
-myplot +
+myplot2 <- ggplot(data = forests) + 
+  geom_point(aes(x = Shannon, y = mgrowth, color = Type)) 
+
+myplot2 +
   facet_grid(rows = vars(Type))
+myplot2 +
+  facet_grid(rows = vars(Type), cols = vars(Richness))
+myplot2 +
+  facet_wrap(facets = vars(Richness), ncol=3)
 
-# Position
-#How arrange geometries that would otherwise occupy the same space
-ggplot(data = forests) +
-  geom_bar(aes(x = factor(Age), fill = Type))
-
-ggplot(data = forests) +
-  geom_bar(aes(x = factor(Age), fill = Type),
-           position = "dodge")
-
-ggplot(data = forests) +
-  geom_bar(aes(x = factor(Age), fill = Type),
-           position = "fill")
 
 # The extras (part II): customization #########
 
-myplot + #Customize aesthetics  
+myplot2 + #Customize aesthetics  
   scale_color_manual(values = c("darkgreen", "chartreuse")) +
-  scale_fill_manual(values = c("darkgreen", "chartreuse")) +
-  scale_y_continuous(breaks = c(1,3), labels = c("a", "b")) 
+  scale_y_log10(breaks = c(1,3), labels = c("a", "b")) 
+#scale + aesthetic to adjust + type of scale
 
+#Exercise: what would you do to change the richness scale to colors from
+#blue to yellow?
+
+myplot +
+  scale_color_gradient(low = "blue", high = "yellow")
 
 #theme() #Complete customization of all plot elements
 ?theme
 
 myplot2 + theme(axis.title.x = element_text(color = "red", face = "bold"))
+#theme(part__of_the_graph = element_to_change (...) )
 
 #Execise: black line representing both axis, no plot background
 
@@ -148,6 +155,9 @@ myplot2 + theme_light()
 
 #GgthemeAssist
 myplot2 
+
+
+
 
 # Last functions ####
 
@@ -182,6 +192,18 @@ myplot / myplot2 + plot_annotation(tag_levels = "a", tag_suffix = ")")
 #   theme_light()
 
 
+# # Position
+# #How arrange geometries that would otherwise occupy the same space
+# ggplot(data = forests) +
+#   geom_bar(aes(x = factor(Age), fill = Type))
+# 
+# ggplot(data = forests) +
+#   geom_bar(aes(x = factor(Age), fill = Type),
+#            position = "dodge")
+# 
+# ggplot(data = forests) +
+#   geom_bar(aes(x = factor(Age), fill = Type),
+#            position = "fill")
 
 
 
